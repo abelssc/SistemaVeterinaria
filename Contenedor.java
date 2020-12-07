@@ -52,7 +52,6 @@ public class Contenedor extends JFrame {
 		setSize(1600,800);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setOpaque(false);
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(java.awt.event.MouseEvent e) {
