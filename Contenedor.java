@@ -78,6 +78,9 @@ public class Contenedor extends JFrame {
 		Compras compras = new Compras();
 		contentPane.add(compras);
 		
+		/*Ventas ventas =new Ventas();
+		contentPane.add(ventas);*/
+		
 		
 		ImageIcon icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/fondoCompras.jpg"));
 		JLabel lblFondo = new JLabel();

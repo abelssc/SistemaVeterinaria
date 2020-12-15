@@ -20,7 +20,7 @@ public class Compras extends JPanel {
 		setLayout(null);
 		setOpaque(false);//NO SE PUEDE PINTAR MANTIENE SUS VALORES POR DEFECTO
 		int margentop=40;
-		int margenleft=30;
+		int margenleft;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////JLABELS
@@ -32,6 +32,7 @@ public class Compras extends JPanel {
 		add(lblTitulo);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
+		JLabel lblProducto =new JLabel("Producto");
 		JLabel lblNombre = new JLabel("Nombre");
 		JLabel lblPrecioVenta = new JLabel("Precio de Venta unitario");
 		
@@ -56,7 +57,8 @@ public class Compras extends JPanel {
 		add(btnCancelar);
 		
 		margentop=120;
-		JLabel[] labelsDato= {lblCategoria,lblNombre,lblPrecioVenta};
+		margenleft=30;
+		JLabel[] labelsDato= {lblCategoria,lblProducto,lblNombre,lblPrecioVenta};
 		JLabel[] labelsCant= {lblStockAniadido,lblStockAntiguo,lblStockFinal};
 		JLabel[] labelsVisual= {lblCodigo/*,lblSubirImg*/};
 		boolean rigth=false,top=false;
@@ -68,7 +70,7 @@ public class Compras extends JPanel {
 			rigth=(rigth)?false:true;
 			margenleft=(rigth)?325:30;
 			margentop=(top)?margentop+70:margentop;
-			top=true;
+			top=(top)?false:true;
 		}
 		//margentop=190;->+30w+30w+30h
 		//margenleft=30;
@@ -134,33 +136,33 @@ public class Compras extends JPanel {
 		add(btnSubirImg);
 		
 		///////////////////////////////////////////////////////////////////////////////////DATOS
-		//margentop=120(lblDatos)+30widthlbs
-		margentop=150;
+		//margentop=190(lblDatos)+30widthlbs
+		margentop=220;
 		margenleft=30;
 		JTextField[] txtsDato= {txtNombre,txtPrecioVenta};
 		for(JTextField txt:txtsDato) {
-			
+			txt.setHorizontalAlignment(SwingConstants.CENTER);
 			txt.setOpaque(false);
 			txt.setBorder(null);
 			txt.setForeground(new Color(255,255,255));
 			txt.setFont(new Font("mononoki Nerd Font Mono", Font.BOLD, 12));
-			txt.setBounds(margenleft+295,margentop,265,30);
+			txt.setBounds(margenleft,margentop,265,30);
 			add(txt);
-			margenleft-=295;
-			margentop+=70;
+			margenleft+=295;
+			
 		}
-		margentop=150;
+		margentop=220;
 		margenleft=30;
 		JLabel lbl4nombre=new JLabel();
 		JLabel lbl4precioventa=new JLabel();
 		JLabel[] lblOpacity= {lbl4nombre,lbl4precioventa};
 		for(JLabel lbls:lblOpacity) {
-			lbls.setBounds(margenleft+295,margentop,265,30);
+			lbls.setBounds(margenleft,margentop,265,30);
 			lbls.setOpaque(true);
 			lbls.setBackground(new Color(40,40,40,80));
 			add(lbls);
-			margenleft-=295;
-			margentop+=70;
+			margenleft+=295;
+		
 		}
 		////////////////////////////////////////////////////////////////////////CANTIDADES
 		//margentop=280+50width
