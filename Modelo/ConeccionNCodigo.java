@@ -16,7 +16,7 @@ public class ConeccionNCodigo {
 		rs=null;
 		
 		try {
-			ps=(PreparedStatement) conexion.getConexion().prepareStatement("select count(idProducto) from producto");
+			ps=(PreparedStatement) conexion.getConexion().prepareStatement("select max(idProducto) from producto");
 			rs=ps.executeQuery();
 			if(rs.next())codigo=rs.getInt(1)+1;
 			

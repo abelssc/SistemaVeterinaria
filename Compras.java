@@ -2,6 +2,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.FilterInputStream;
+import java.nio.channels.Selector;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -10,12 +15,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Modelo.ConeccionCategoria;
 import Modelo.ConeccionNCodigo;
@@ -176,6 +183,7 @@ public class Compras extends JPanel {
 		btnSubirImg.setBounds(374,420+bajar,210,30);
 		btnSubirImg.setOpaque(false);
 		add(btnSubirImg);
+		btnSubirImg.addMouseListener(subirImg);
 		
 		///////////////////////////////////////////////////////////////////////////////////DATOS
 		//margentop=190(lblDatos)+30widthlbs
@@ -307,4 +315,36 @@ public class Compras extends JPanel {
 			}
 		}
 	};
+	public MouseListener subirImg=new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			JOptionPane.showMessageDialog(null, "Hiii");
+			JFileChooser selector=new JFileChooser();
+			FileNameExtensionFilter filtro=new FileNameExtensionFilter("JPG & PNG Images", "jpg","png");
+			selector.setFileFilter(filtro);
+			//int value=selector.showOpenDialog(this);
+			
+			
+		
+		}
+	
+		
+	};
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
