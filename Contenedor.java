@@ -75,11 +75,11 @@ public class Contenedor extends JFrame {
 		contentPane.add(menu);
 		//////////////
 		
-		Compras compras = new Compras();
-		contentPane.add(compras);
+		/*Compras compras = new Compras();
+		contentPane.add(compras);*/
 		
-		/*Ventas ventas =new Ventas();
-		contentPane.add(ventas);*/
+		Ventas ventas =new Ventas();
+		contentPane.add(ventas);
 		
 		
 		ImageIcon icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/fondoCompras.jpg"));

@@ -1,10 +1,17 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FilterInputStream;
 import java.nio.channels.Selector;
 
@@ -27,9 +34,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import Modelo.ConeccionCategoria;
 import Modelo.ConeccionNCodigo;
 import Modelo.ConeccionProductos;
+import Modelo.GuardarProductos;
 
 import java.awt.Cursor;
 import javax.swing.JSeparator;
+import javax.swing.border.LineBorder;
 
 public class Compras extends JPanel {
 	JComboBox<Object> JCbCategoria;
@@ -37,6 +46,13 @@ public class Compras extends JPanel {
 	JTextField txtNombre;
 	JTextField txtPrecioVenta;
 	JTextField txtCodigo;
+	JTextField txtStockAniadido;
+	JTextField txtStockAntiguo;
+	JTextField txtStockFinal;
+	JLabel lblSubirImg;
+	File archivo;
+	
+	JLabel btnSubirImg;
 
 	/**
 	 * Create the panel.
@@ -67,7 +83,7 @@ public class Compras extends JPanel {
 		JLabel lblStockFinal = new JLabel("<html><body>Cantidades finales del Producto</body></html>");
 		
 		JLabel lblCodigo = new JLabel("Codigo");
-		JLabel lblSubirImg = new JLabel("Subir Imagen");
+		lblSubirImg = new JLabel("Subir Imagen");
 		
 		JLabel btnGuardar = new JLabel();
 		btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -75,12 +91,50 @@ public class Compras extends JPanel {
 		btnGuardar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/Guardar.png")));
 		btnGuardar.setBounds(160,580+bajar,150,30);
 		add(btnGuardar);
+		btnGuardar.addMouseListener(guardarProducto);
+		btnGuardar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGuardar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/Guardar.png")));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGuardar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/GuardarFocus.png")));			
+			}
+		});
+		
 		JLabel btnCancelar = new JLabel();
 		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		btnCancelar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/Cancelar.png")));
 		btnCancelar.setBounds(330,580+bajar,150,30);
 		add(btnCancelar);
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCancelar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/Cancelar.png")));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCancelar.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/CancelarFocus.png")));			
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				JCbProducto.setSelectedIndex(0);
+				JCbCategoria.setSelectedIndex(0);
+				txtNombre.setText("");
+				txtPrecioVenta.setText("0.00");
+				txtCodigo.setText("0000");
+				txtStockAniadido.setText("00");
+				txtStockFinal.setText("0");
+				archivo=null;
+			}
+		});
+	
 		
 		margentop=120;
 		margenleft=30;
@@ -155,16 +209,16 @@ public class Compras extends JPanel {
 		txtNombre=new JTextField("-------------------");
 		txtPrecioVenta=new JTextField("0.00");
 		
-		JTextField txtStockAniadido=new JTextField();
-		JTextField txtStockAntiguo=new JTextField();
+		txtStockAniadido=new JTextField();
+		txtStockAniadido.addKeyListener(aniadiendoproductos);
+		txtStockAntiguo=new JTextField();
 		txtStockAntiguo.setEditable(false);
-		JTextField txtStockFinal=new JTextField();
+		txtStockFinal=new JTextField();
 		txtStockFinal.setEditable(false);
 		
 		txtCodigo=new JTextField("0000");
 		txtCodigo.setBounds(54,420+bajar,210,30);
 		txtCodigo.setOpaque(false);
-		txtCodigo.setBorder(null);
 		txtCodigo.setEditable(false);
 		txtCodigo.setFont(new Font("mononoki Nerd Font Mono", Font.BOLD, 15));
 		txtCodigo.setForeground(new Color(255,255,255));
@@ -176,14 +230,13 @@ public class Compras extends JPanel {
 		opacity4codigo.setBackground(new Color(40,40,40,80));
 		add(opacity4codigo);
 		
-		JLabel btnSubirImg=new JLabel();
+		btnSubirImg=new JLabel();
 		btnSubirImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSubirImg.setHorizontalAlignment(SwingConstants.CENTER);
 		btnSubirImg.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/btn.png")));
 		btnSubirImg.setBounds(374,420+bajar,210,30);
 		btnSubirImg.setOpaque(false);
 		add(btnSubirImg);
-		btnSubirImg.addMouseListener(subirImg);
 		
 		///////////////////////////////////////////////////////////////////////////////////DATOS
 		//margentop=190(lblDatos)+30widthlbs
@@ -306,28 +359,115 @@ public class Compras extends JPanel {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(((ConeccionProductos)JCbProducto.getSelectedItem()).getIdProducto()==0) {
+			ConeccionProductos itemSeleccionado=((ConeccionProductos)JCbProducto.getSelectedItem());
+			if(itemSeleccionado.getIdProducto()==0) {
 				txtNombre.setEditable(true);
 				txtPrecioVenta.setEditable(true);
 				ConeccionNCodigo codigo=new ConeccionNCodigo();
 				txtCodigo.setText("0000"+codigo.generarCodigo());
 				
+				txtNombre.setBorder(new LineBorder(new Color(114, 138, 253), 2, true));
+				txtPrecioVenta.setBorder(new LineBorder(new Color(114, 138, 253), 2, true));
+				txtStockAniadido.setBorder(new LineBorder(new Color(114, 138, 253), 2, true));
+				
+				btnSubirImg.addMouseListener(subirImg);
+				btnSubirImg.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/btnFocus.png")));
+				txtNombre.setText("---------");
+				txtPrecioVenta.setText("0.00");
+				txtCodigo.setText("0000");
+				txtStockAntiguo.setText("00");
+				txtStockAniadido.setText("00");
+				txtStockFinal.setText("00");
+				
+				
+			}else if(itemSeleccionado.getIdProducto()>=1){
+				txtNombre.setText(itemSeleccionado.getNombre());
+				txtPrecioVenta.setText(String.valueOf(itemSeleccionado.getPrecio()));
+				txtCodigo.setText(itemSeleccionado.getCodigo());
+				txtStockAntiguo.setText(String.valueOf(itemSeleccionado.getStock()));
+				txtStockAniadido.setText("0");
+				txtStockFinal.setText("00");
+				txtNombre.setEditable(false);
+				txtPrecioVenta.setEditable(false);
+				btnSubirImg.removeMouseListener(subirImg);
+				btnSubirImg.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/btn.png")));
+				
+				txtStockAniadido.setBorder(new LineBorder(new Color(114, 138, 253), 2, true));
+				txtNombre.setBorder(null);
+				txtPrecioVenta.setBorder(null);
+			}else {
+				txtNombre.setText("---------");
+				txtPrecioVenta.setText("0.00");
+				txtCodigo.setText("0000");
+				txtStockAntiguo.setText("00");
+				txtStockAniadido.setText("00");
+				txtStockFinal.setText("00");
+				txtNombre.setEditable(false);
+				txtPrecioVenta.setEditable(false);
+				btnSubirImg.removeMouseListener(subirImg);
+				btnSubirImg.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/btn.png")));
+				
+				txtStockAniadido.setBorder(null);
+				txtNombre.setBorder(null);
+				txtPrecioVenta.setBorder(null);
+				
 			}
 		}
 	};
+	public KeyListener aniadiendoproductos=new KeyAdapter() {
+		
+	
+		@Override
+		public void keyReleased(KeyEvent arg0) {//LLAMA A LA ACCION CADA VEZ Q SE SUELTA EL BOTON, //NOS AYUDA A OBTENER ANTES EL TEXTO
+			int stock=Integer.parseInt(txtStockAniadido.getText())+Integer.parseInt(txtStockAntiguo.getText());
+			txtStockFinal.setText(String.valueOf(stock));
+		}
+	
+	};
+	
+	
 	public MouseListener subirImg=new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-			JOptionPane.showMessageDialog(null, "Hiii");
 			JFileChooser selector=new JFileChooser();
 			FileNameExtensionFilter filtro=new FileNameExtensionFilter("JPG & PNG Images", "jpg","png");
 			selector.setFileFilter(filtro);
-			//int value=selector.showOpenDialog(this);
-			
-			
-		
+			int value=selector.showOpenDialog(lblSubirImg);
+			if(value==JFileChooser.APPROVE_OPTION) {
+				archivo=selector.getSelectedFile();
+			}
 		}
-	
-		
+	};
+	/*JComboBox<Object> JCbCategoria;
+	JComboBox<Object> JCbProducto;
+	JTextField txtNombre;
+	JTextField txtPrecioVenta;
+	JTextField txtCodigo;
+	JTextField txtStockFinal;
+	JLabel lblSubirImg;
+	File archivo;*/
+	public MouseListener guardarProducto=new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			String nombre=txtNombre.getText();
+			float precio=Float.parseFloat(txtPrecioVenta.getText());
+			String codigo=txtCodigo.getText();
+			int stock=Integer.parseInt(txtStockFinal.getText());
+			int categoria=((ConeccionCategoria)JCbCategoria.getSelectedItem()).getIdTipoProducto();
+			
+			int  insertarNuevoProducto=((ConeccionProductos)JCbProducto.getSelectedItem()).getIdProducto();
+			//File archivo;
+			
+			if(insertarNuevoProducto==0) {
+				new GuardarProductos(nombre, precio, codigo, stock, archivo, categoria);
+			}
+			JCbProducto.setSelectedIndex(0);
+			JCbCategoria.setSelectedIndex(0);
+			txtNombre.setText("");
+			txtPrecioVenta.setText("0.00");
+			txtCodigo.setText("0000");
+			txtStockAniadido.setText("00");
+			txtStockFinal.setText("0");
+			archivo=null;
+		}
 	};
 }
 

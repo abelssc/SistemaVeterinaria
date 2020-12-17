@@ -14,7 +14,7 @@ public class ConeccionProductos {
 	private int stock;
 	private String imagen;
 	private int TipoProducto_idTipoProducto;
-	public int idTipoProducto;
+	//public int idTipoProducto;
 	private Coneccion conexion=new Coneccion();
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -86,7 +86,7 @@ public class ConeccionProductos {
 		
 		try {
 			ps=(PreparedStatement) conexion.getConexion().prepareStatement("select idProducto,nombre,precio,codigo,stock from producto where TipoProducto_idTipoProducto=?");
-			ps.setInt(1, idTipoProducto);
+			ps.setInt(1, getTipoProducto_idTipoProducto());
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				productos=new ConeccionProductos();

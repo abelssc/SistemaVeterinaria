@@ -9,6 +9,8 @@ import com.mysql.jdbc.PreparedStatement;
 public class ConeccionCategoria {
 	private int idTipoProducto;
 	private String nombreTipoProducto;
+	
+	
 	public Coneccion conexion=new Coneccion();
 	public PreparedStatement ps;
 	public ResultSet rs;
