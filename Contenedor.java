@@ -78,8 +78,14 @@ public class Contenedor extends JFrame {
 		/*Compras compras = new Compras();
 		contentPane.add(compras);*/
 		
-		Ventas ventas =new Ventas();
-		contentPane.add(ventas);
+		/*Ventas ventas =new Ventas();
+		contentPane.add(ventas);*/
+		
+		/*Inventario inventario=new Inventario();
+		contentPane.add(inventario);*/
+		
+		/*VentasGeneradas ventasgeneradas=new VentasGeneradas();
+		contentPane.add(ventasgeneradas);*/
 		
 		
 		ImageIcon icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/fondoCompras.jpg"));

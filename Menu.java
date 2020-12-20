@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -18,12 +19,22 @@ import javax.swing.JCheckBoxMenuItem;
 public class Menu extends JPanel {
 	JPanel infoUsuario;
 	JPanel menuItems;
+	
+	
 	////////////////////////METODOS
 	public MouseListener mouselistener=new MouseListener() {
 	
 		@Override
 		public void mouseClicked(MouseEvent event) {
-		// TODO Auto-generated method stub
+			JOptionPane.showMessageDialog(null, ((JComponent) event.getSource()).getName());
+			/*switch(((JComponent) event.getSource()).getName()) {
+			case "almacen":
+				Inventario inventario=new Inventario();
+				inventario.setVisible(true);
+				
+				
+				
+			}*/
 		
 		}
 		
@@ -78,6 +89,9 @@ public class Menu extends JPanel {
 		add(menuItems);
 		crearMenuItems();
 		
+		Inventario inventario=new Inventario();
+		inventario.setVisible(true);
+		
 	}
 	
 	public void crearInfoUsuario() {
@@ -112,30 +126,40 @@ public class Menu extends JPanel {
 		int contador=0;
 		
 		JLabel almacen=new JLabel("   Almacén");
+		almacen.setName("almacen");
 		ImageIcon iconoAlmacen= new ImageIcon(getClass().getResource("/imagenes/almacen.png"));
 		almacen.setIcon(new ImageIcon(iconoAlmacen.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 		almacen.setHorizontalAlignment(SwingConstants.LEADING);
 		//menuItems.add(almacen);
 		
 		JLabel compras=new JLabel("   Compras");
+		compras.setName("compras");
 		ImageIcon iconoCompras= new ImageIcon(getClass().getResource("/imagenes/compras.png"));
 		compras.setIcon(new ImageIcon(iconoCompras.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 		
 		//menuItems.add(compras);
 		
 		JLabel ventas=new JLabel("    Ventas");
+		ventas.setName("ventas");
 		ImageIcon iconoVentas= new ImageIcon(getClass().getResource("/imagenes/ventas.png"));
 		ventas.setIcon(new ImageIcon(iconoVentas.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 		//menuItems.add(ventas);
 		
+		JLabel historialventas=new JLabel("    Historial de Ventas");
+		historialventas.setName("historial");
+		ImageIcon iconohistorial= new ImageIcon(getClass().getResource("/imagenes/ventas.png"));
+		historialventas.setIcon(new ImageIcon(iconohistorial.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+		//menuItems.add(ventas);
+		
 		JLabel salir=new JLabel("   Salir");
+		salir.setName("salir");
 		ImageIcon iconoSalir= new ImageIcon(getClass().getResource("/imagenes/salir.png"));
 		salir.setIcon(new ImageIcon(iconoSalir.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 		//menuItems.add(salir);
 		
 		
 		//////////////////////ASIGNANDO VALORES A LOS JLABELS DE MENU	
-		JLabel[] estilosMenu= {almacen,compras,ventas,salir};
+		JLabel[] estilosMenu= {almacen,compras,ventas,historialventas,salir};
 		for(JLabel e:estilosMenu) {
 			e.setBounds(0,contador*alturaItems,anchoItems,alturaItems);
 			e.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 20));
@@ -147,6 +171,7 @@ public class Menu extends JPanel {
 			e.addMouseListener(mouselistener);
 			contador++;
 		}
-			
+		salir.setBounds(0,600,anchoItems,alturaItems);
+		
 	}
 }
