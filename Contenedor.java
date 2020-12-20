@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
 
@@ -17,6 +18,8 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.Cursor;
+import java.awt.event.MouseEvent;
 
 
 
@@ -31,6 +34,9 @@ public class Contenedor extends JFrame {
 	private static Ventas ventas;
 	private static VentasGeneradas historial;
 	private static JLabel lblFondo;
+	
+	private static ImageIcon icono;
+	private static JLabel lblexit;
 	/**
 	 * Launch the application.
 	 */
@@ -48,28 +54,43 @@ public class Contenedor extends JFrame {
 	}
 	public static void agregarpaneles(String panel) {
 		contentPane.removeAll();
-		contentPane.add(menu);
+		contentPane.add(lblexit);
 		switch (panel) {
 			case "almacen":
 				inventario=new Inventario();
 				contentPane.add(inventario);
+				Menu.almacen.setBackground(Color.LIGHT_GRAY);
+				icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/almacen.jpg"));
+				lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));
 				break;
 			case "compras":
 				compras=new Compras();
 				contentPane.add(compras);
+				Menu.compras.setBackground(Color.LIGHT_GRAY);
+				icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/login.jpg"));
+				lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));
 				break;
 			case "ventas":
 				ventas=new Ventas();
 				contentPane.add(ventas);
+				Menu.ventas.setBackground(Color.LIGHT_GRAY);
+				icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/ventas.jpg"));
+				lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));
 				break;
 			case "historial":
 				historial=new VentasGeneradas();
 				contentPane.add(historial);
+				Menu.historialventas.setBackground(Color.LIGHT_GRAY);
+				icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/historialventas.jpg"));
+				lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));
 				break;
 			case "salir":
 				System.exit(0);
 		}
+		
+		contentPane.add(menu);
 		contentPane.add(lblFondo);
+		
 		contentPane.revalidate();
 		contentPane.repaint();
 	}
@@ -108,6 +129,18 @@ public class Contenedor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		
+		lblexit = new JLabel("");
+		lblexit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		lblexit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblexit.setIcon(new ImageIcon(Contenedor.class.getResource("/imagenes/exit.png")));
+		lblexit.setBounds(1550, 10, 30, 30);
+		contentPane.add(lblexit);
 		//////MENU
 		//menu=new Menu();
 		contentPane.add(menu);
@@ -127,7 +160,7 @@ public class Contenedor extends JFrame {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
-		ImageIcon icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/fondoCompras.jpg"));
+		icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/almacen.jpg"));
 		lblFondo = new JLabel();
 		lblFondo.setBounds(300, 0, 1300, 800);
 		lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));

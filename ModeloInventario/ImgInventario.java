@@ -1,6 +1,7 @@
 package ModeloInventario;
 
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -28,6 +29,10 @@ public class ImgInventario extends DefaultTableCellRenderer {
 			
 			table.getColumnModel().getColumn(4).setMaxWidth(80);
 			table.getColumnModel().getColumn(4).setMinWidth(80);
+			
+			table.getColumnModel().getColumn(5).setMaxWidth(80);
+			table.getColumnModel().getColumn(5).setMinWidth(80);
+			
 			
 			if(value instanceof JLabel) {
 				JLabel lbl=(JLabel) value;

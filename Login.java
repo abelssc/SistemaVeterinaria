@@ -2,10 +2,12 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.EventQueue;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -15,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import java.awt.Font;
@@ -23,11 +26,15 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.Canvas;
 
-public class Login extends JPanel {
+public class Login extends JFrame {
+	private  JPanel contentPane;
+	public static String nombreusuario;
+	
 	private JTextField txtEmail;
 	private JPasswordField txtPasswordEmail;
 	public JLabel lblEmail;
@@ -36,6 +43,30 @@ public class Login extends JPanel {
 	public JLabel imagenCandado;
 	public ImageIcon candado;
 	public ImageIcon candadoOpen;
+	private int xLbl;
+	private int yLbl;
+	
+	private MouseListener click=new MouseAdapter() {
+		public void mousePressed(MouseEvent e) {
+			xLbl=e.getX();
+			yLbl=e.getY();
+			//System.out.println(xLbl+","+yLbl);
+		}
+	};
+	
+	private MouseMotionListener dragg=new MouseMotionAdapter() {
+		@Override
+		public void mouseDragged(MouseEvent event) {
+			int xScreen=event.getXOnScreen();
+			int yScreen=event.getYOnScreen();
+			//System.out.println(xScreen+","+yScreen);
+			
+			setLocation(xScreen-xLbl, yScreen-yLbl);
+			
+		}
+	};
+	
+	
 	
 	public FocusListener focus=new FocusListener() {
 	
@@ -86,6 +117,7 @@ public class Login extends JPanel {
 				rs=ps.executeQuery();
 				boolean correcto=false;
 				if(rs.next()) {
+					nombreusuario=rs.getString("nombreusuario");
 					char[] clave=rs.getString("clave").toCharArray();
 					if(clave.length==txtPasswordEmail.getPassword().length) {
 						for(int i=0;i<clave.length;i++) {
@@ -100,7 +132,7 @@ public class Login extends JPanel {
 						Contenedor contenedor=new Contenedor();
 						contenedor.setVisible(true);
 						setVisible(false);
-						Principal.contentPane.setVisible(false);
+						
 						
 					}else {
 						JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
@@ -146,12 +178,54 @@ public class Login extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login frame = new Login();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
 	public Login() {
-		setBounds(0,0,800,650);
-		setLayout(null);
-		setBackground(null);
+		setUndecorated(true);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setSize(800,650);
+		setLocationRelativeTo(null);
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(null);
+		setContentPane(contentPane);
+		
+	
+		contentPane.setBackground(null);
 		int x=this.getWidth()/3;
 		int y=this.getHeight()/2;
+		
+		JLabel lblexit = new JLabel("");
+		lblexit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblexit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.exit(0);
+			}
+		});
+		lblexit.setIcon(new ImageIcon(Login.class.getResource("/imagenes/exit.png")));
+		lblexit.setBounds(755, 15, 30, 30);
+		contentPane.add(lblexit);
 		
 			
 		////////////////////////////////////////////////////////////EMAIL
@@ -162,7 +236,7 @@ public class Login extends JPanel {
 		txtEmail.setBounds(x, y, x, 30);
 		txtEmail.setBackground(null);
 		txtEmail.setForeground(new Color(242,242,242));
-		add(txtEmail);
+		contentPane.add(txtEmail);
 		txtEmail.addFocusListener(focus);
 		
 		lblEmail = new JLabel("E m a i l");
@@ -170,7 +244,7 @@ public class Login extends JPanel {
 		lblEmail.setBounds(x, y, x, 30);
 		lblEmail.setForeground(new Color(255,255,255));
 		lblEmail.setBackground(null);
-		add(lblEmail);
+		contentPane.add(lblEmail);
 		
 		
 		
@@ -184,7 +258,7 @@ public class Login extends JPanel {
 		txtPasswordEmail.setBackground(null);
 		txtPasswordEmail.setOpaque(false);
 		txtPasswordEmail.setForeground(new Color(242,242,242));
-		add(txtPasswordEmail);
+		contentPane.add(txtPasswordEmail);
 		txtPasswordEmail.addFocusListener(focus);
 		
 		
@@ -193,7 +267,7 @@ public class Login extends JPanel {
 		lblPasswordEmail.setBounds(x, y+40,x, 30);
 		lblPasswordEmail.setForeground(new Color(255,255,255));
 		lblPasswordEmail.setBackground(null);
-		add(lblPasswordEmail);
+		contentPane.add(lblPasswordEmail);
 		
 		
 		
@@ -204,7 +278,7 @@ public class Login extends JPanel {
 		chckbxRecordar.setBounds(x, y+80,x, 30);
 		chckbxRecordar.setOpaque(false);
 		chckbxRecordar.setForeground(new Color(255, 255, 255));		
-		add(chckbxRecordar);
+		contentPane.add(chckbxRecordar);
 	
 		
 		
@@ -212,26 +286,28 @@ public class Login extends JPanel {
 		JSeparator separatorEmail = new JSeparator();
 		separatorEmail.setBounds(x, y+30, x, 2);
 		separatorEmail.setBackground(new Color(255,99,71));
-		add(separatorEmail);
+		contentPane.add(separatorEmail);
 		
 		JSeparator separatorPassword = new JSeparator();
 		separatorPassword.setBounds(x, y+70, x, 2);
 		separatorPassword.setBackground(new Color(255,99,71));
-		add(separatorPassword);
+		contentPane.add(separatorPassword);
 		
 		//////////////////////////////////////////////////////////IMAGENES
 		candado=new ImageIcon(getClass().getResource("/imagenes/candado.png"));
 		candadoOpen=new ImageIcon(getClass().getResource("/imagenes/candadoOpen.png"));
 		imagenCandado = new JLabel(candado);
 		imagenCandado.setBounds(x-120, y, 80, 80);
-		add(imagenCandado);
+		contentPane.add(imagenCandado);
 		imagenCandado.addMouseListener(mouseFocus);
 		
 		
 		ImageIcon icono=new ImageIcon(getClass().getResource("/imagenes/animals/login.jpg"));
 		JLabel imagen=new JLabel(icono);
 		imagen.setBounds(0,0,800,650);
-		add(imagen);
+		contentPane.add(imagen);
+		imagen.addMouseListener(click);
+		imagen.addMouseMotionListener(dragg);
 		
 	}
 }

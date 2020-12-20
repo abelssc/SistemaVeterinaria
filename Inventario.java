@@ -39,7 +39,8 @@ public class Inventario extends JPanel {
 		setLayout(null);
 		
 		JLabel lblInventario = new JLabel("Inventario");
-		lblInventario.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 20));
+		lblInventario.setForeground(Color.WHITE);
+		lblInventario.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 30));
 		lblInventario.setBounds(30, 30, 500, 30);
 		add(lblInventario);
 		
@@ -111,27 +112,20 @@ public class Inventario extends JPanel {
 						System.out.println("ERROR AL BUSCAR IMAGEN");
 						e.printStackTrace();
 					}
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					return true;
 				}
 				else return false;
 			}
 		};
+		table.setSelectionBackground(Color.LIGHT_GRAY);
 		table.setDefaultRenderer(Object.class, new ImgInventario());
 		table.setRowHeight(30);
-		table.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 30));
+		table.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 35));
+		table.getTableHeader().setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 14));
+		table.getTableHeader().setBackground(new Color(255,99,71));
+		table.setBackground(new Color(60,60,60));
+		
+		table.setForeground(Color.WHITE);
 		scrollPane.setViewportView(table);
 		
 		

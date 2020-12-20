@@ -20,6 +20,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -40,8 +42,9 @@ public class VentasGeneradas extends JPanel {
 		setLayout(null);
 		
 		JLabel lblIngresosTotales = new JLabel("Ingresos Totales");
-		lblIngresosTotales.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 25));
-		lblIngresosTotales.setBounds(30, 30, 300, 30);
+		lblIngresosTotales.setForeground(Color.WHITE);
+		lblIngresosTotales.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 30));
+		lblIngresosTotales.setBounds(30, 30, 390, 30);
 		add(lblIngresosTotales);
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,23 +55,26 @@ public class VentasGeneradas extends JPanel {
 		add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("S/");
+		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBorder(new MatteBorder(1, 1, 1, 0, (Color) Color.RED));
+		lblNewLabel_1.setBorder(new MatteBorder(1, 1, 1, 0, (Color) Color.WHITE));
 		lblNewLabel_1.setBounds(230, 140, 40, 60);
-		lblNewLabel_1.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 25));
+		lblNewLabel_1.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 30));
 		add(lblNewLabel_1);
 		
 		lblTotal = new JLabel("");
+		lblTotal.setForeground(Color.WHITE);
 		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTotal.setBorder(new MatteBorder(1, 0, 1, 1, (Color) Color.RED));
+		lblTotal.setBorder(new MatteBorder(1, 0, 1, 1, (Color) Color.WHITE));
 		lblTotal.setBounds(270, 140, 150, 60);
-		lblTotal.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 25));
+		lblTotal.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 30));
 		add(lblTotal);
 		dineroTotal();
 		
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		JLabel lblVentasGeneradas = new JLabel("Ventas Generadas");
+		lblVentasGeneradas.setForeground(Color.WHITE);
 		lblVentasGeneradas.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 25));
 		lblVentasGeneradas.setBounds(30, 231, 300, 30);
 		add(lblVentasGeneradas);
@@ -100,6 +106,11 @@ public class VentasGeneradas extends JPanel {
 		};
 		
 		table.setDefaultRenderer(Object.class, new FormatoTabla());
+		table.setBackground(new Color(60,60,60));
+		table.setForeground(Color.WHITE);
+		table.getTableHeader().setBackground(new Color(255,99,71));
+		table.getTableHeader().setPreferredSize(new Dimension(0,35));
+		table.getTableHeader().setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 14));
 		scrollPane.setViewportView(table);
 		
 		

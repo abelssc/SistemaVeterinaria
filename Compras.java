@@ -374,7 +374,6 @@ public class Compras extends JPanel {
 				btnSubirImg.setIcon(new ImageIcon(Compras.class.getResource("/imagenes/btnFocus.png")));
 				txtNombre.setText("---------");
 				txtPrecioVenta.setText("0.00");
-				txtCodigo.setText("0000");
 				txtStockAntiguo.setText("00");
 				txtStockAniadido.setText("00");
 				txtStockFinal.setText("00");

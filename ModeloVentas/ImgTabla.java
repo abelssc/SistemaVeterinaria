@@ -29,6 +29,7 @@ public class ImgTabla extends DefaultTableCellRenderer {
 		
 		if(value instanceof JLabel) {
 			JLabel lbl=(JLabel) value;
+			lbl.setHorizontalAlignment(SwingConstants.CENTER);
 			return lbl;
 		}
 
