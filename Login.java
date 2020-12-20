@@ -4,7 +4,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import Modelo.Coneccion;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,6 +23,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.Canvas;
 
 public class Login extends JPanel {
@@ -66,7 +74,44 @@ public class Login extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			Coneccion conexion=new Coneccion();
+			PreparedStatement ps;
+			ResultSet rs;
+			ps=null;
+			rs=null;
+			
+			try {
+				ps=(PreparedStatement) conexion.getConexion().prepareStatement("select concat_ws(' ',nombre,apellido) nombreusuario,clave from empleado where correo=?");
+				ps.setString(1, txtEmail.getText());
+				rs=ps.executeQuery();
+				boolean correcto=false;
+				if(rs.next()) {
+					char[] clave=rs.getString("clave").toCharArray();
+					if(clave.length==txtPasswordEmail.getPassword().length) {
+						for(int i=0;i<clave.length;i++) {
+							if(txtPasswordEmail.getPassword()[i]==clave[i])correcto=true;
+							else {
+								correcto=false;
+								break;
+							}
+						}
+					}
+					if(correcto) {
+						Contenedor contenedor=new Contenedor();
+						contenedor.setVisible(true);
+						setVisible(false);
+						Principal.contentPane.setVisible(false);
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
+				}
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
+				e.printStackTrace();
+			}
 			
 		}
 

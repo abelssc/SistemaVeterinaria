@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Principal extends JFrame {
 
-	private JPanel contentPane;
+	public static JPanel contentPane;
 
 	/**
 	 * Launch the application.

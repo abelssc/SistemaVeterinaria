@@ -1,30 +1,36 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Image;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+
 import javax.swing.border.EmptyBorder;
 
-import org.w3c.dom.events.MouseEvent;
 
-import com.jgoodies.forms.layout.ConstantSize;
+
+
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.JComboBox;
+
+
 
 public class Contenedor extends JFrame {
 
-	private JPanel contentPane;
+	private static JPanel contentPane;
 	private int x;
 	private int y;
-
+	private static Menu menu=new Menu();
+	private static Inventario inventario;
+	private static Compras compras;
+	private static Ventas ventas;
+	private static VentasGeneradas historial;
+	private static JLabel lblFondo;
 	/**
 	 * Launch the application.
 	 */
@@ -40,10 +46,42 @@ public class Contenedor extends JFrame {
 			}
 		});
 	}
-
+	public static void agregarpaneles(String panel) {
+		contentPane.removeAll();
+		contentPane.add(menu);
+		switch (panel) {
+			case "almacen":
+				inventario=new Inventario();
+				contentPane.add(inventario);
+				break;
+			case "compras":
+				compras=new Compras();
+				contentPane.add(compras);
+				break;
+			case "ventas":
+				ventas=new Ventas();
+				contentPane.add(ventas);
+				break;
+			case "historial":
+				historial=new VentasGeneradas();
+				contentPane.add(historial);
+				break;
+			case "salir":
+				System.exit(0);
+		}
+		contentPane.add(lblFondo);
+		contentPane.revalidate();
+		contentPane.repaint();
+	}
+	
+	
+	
+	
 	/**
 	 * Create the frame.
 	 */
+	
+	
 	public Contenedor() {
 		setUndecorated(true);
 		setResizable(false);
@@ -71,9 +109,9 @@ public class Contenedor extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		//////MENU
-		Menu menu=new Menu();
+		//menu=new Menu();
 		contentPane.add(menu);
-		//////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		/*Compras compras = new Compras();
 		contentPane.add(compras);*/
@@ -81,18 +119,23 @@ public class Contenedor extends JFrame {
 		/*Ventas ventas =new Ventas();
 		contentPane.add(ventas);*/
 		
-		/*Inventario inventario=new Inventario();
-		contentPane.add(inventario);*/
+		inventario=new Inventario();
+		contentPane.add(inventario);
 		
 		/*VentasGeneradas ventasgeneradas=new VentasGeneradas();
 		contentPane.add(ventasgeneradas);*/
+		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
 		ImageIcon icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/fondoCompras.jpg"));
-		JLabel lblFondo = new JLabel();
+		lblFondo = new JLabel();
 		lblFondo.setBounds(300, 0, 1300, 800);
 		lblFondo.setIcon(new ImageIcon(icono.getImage().getScaledInstance(1300, 800,Image.SCALE_SMOOTH)));
 		contentPane.add(lblFondo);
+		
+	
+		
 		//////////////////////////////
 	}
+	
 }
