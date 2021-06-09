@@ -18,6 +18,7 @@ import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -62,10 +63,21 @@ public class Ventas extends JPanel {
 	 * Create the panel.
 	 */
 	public Ventas() {
+		/*try {
+			for(UIManager.LookAndFeelInfo info: UIManager.getInstalledLookAndFeels()) {
+				if("Windows".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		}catch(Exception e) {
+			e.getMessage();
+		}*/
+		
 		setBounds(320,20,1260,760);
 		setOpaque(false);//NO SE PUEDE PINTAR MANTIENE SUS VALORES POR DEFECTO
-		int margentop=40;
-		int margenleft=30;
+		/*int margentop=40;
+		int margenleft=30;*/
 		setLayout(null);
 		/////////////////////////////////////////////////////JUST LABELS less IMPORTANT////////////////
 		JLabel lblVentas = new JLabel("Ventas");
@@ -375,14 +387,14 @@ public class Ventas extends JPanel {
 		lblIconoGenerarVenta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblIconoGenerarVenta.setBorder(new LineBorder(new Color(0, 0, 0), 0, true));
 		lblIconoGenerarVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconoGenerarVenta.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 14));
+		lblIconoGenerarVenta.setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 16));
 		lblIconoGenerarVenta.setForeground(Color.WHITE);
 		lblIconoGenerarVenta.setOpaque(true);
-		lblIconoGenerarVenta.setBackground(Color.ORANGE);
+		lblIconoGenerarVenta.setBackground(new Color(255,99,71));
 		
 		ImageIcon iconoventa= new ImageIcon(getClass().getResource("/imagenes/ventas.png"));
 		lblIconoGenerarVenta.setIcon(new ImageIcon(iconoventa.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-		lblIconoGenerarVenta.setBounds(20, 370, 160, 30);
+		lblIconoGenerarVenta.setBounds(20, 370, 180, 33);
 		panel_1.add(lblIconoGenerarVenta);
 		lblIconoGenerarVenta.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -413,7 +425,7 @@ public class Ventas extends JPanel {
 		lblIconoCancelar.setForeground(Color.WHITE);
 		lblIconoCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconoCancelar.setIcon(new ImageIcon(Ventas.class.getResource("/imagenes/equis.png")));
-		lblIconoCancelar.setBounds(200, 370, 160, 30);
+		lblIconoCancelar.setBounds(220, 370, 180, 33);
 		panel_1.add(lblIconoCancelar);
 		lblIconoCancelar.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {

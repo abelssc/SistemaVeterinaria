@@ -24,11 +24,12 @@ import java.awt.event.MouseEvent;
 
 
 public class Contenedor extends JFrame {
-
-	private static JPanel contentPane;
+	
 	private int x;
 	private int y;
-	private static Menu menu=new Menu();
+
+	private static JPanel contentPane;
+	private static Menu menu;
 	private static Inventario inventario;
 	private static Compras compras;
 	private static Ventas ventas;
@@ -141,24 +142,14 @@ public class Contenedor extends JFrame {
 		lblexit.setIcon(new ImageIcon(Contenedor.class.getResource("/imagenes/exit.png")));
 		lblexit.setBounds(1550, 10, 30, 30);
 		contentPane.add(lblexit);
-		//////MENU
-		//menu=new Menu();
+		
+		menu=new Menu();
 		contentPane.add(menu);
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		/*Compras compras = new Compras();
-		contentPane.add(compras);*/
-		
-		/*Ventas ventas =new Ventas();
-		contentPane.add(ventas);*/
-		
+			
 		inventario=new Inventario();
 		contentPane.add(inventario);
-		
-		/*VentasGeneradas ventasgeneradas=new VentasGeneradas();
-		contentPane.add(ventasgeneradas);*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+
 		
 		icono=new ImageIcon(Contenedor.class.getResource("/imagenes/animals/almacen.jpg"));
 		lblFondo = new JLabel();

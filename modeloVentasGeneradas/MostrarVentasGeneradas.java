@@ -37,7 +37,7 @@ public class MostrarVentasGeneradas {
 		ps=null;
 		rs=null;
 		try {
-			ps=(PreparedStatement) conexion.getConexion().prepareStatement("select numeroComprobante,fechaEmitida,horaEmitida,concat_ws(\" \",clientenatural.nombres,clientejuridico.nombreEmpresa) NombreCliente,\r\n" + 
+			ps=(PreparedStatement) conexion.getConexion().prepareStatement("select numeroComprobante,fechaEmitida,horaEmitida,concat_ws(\" \",clientenatural.nombres,clientenatural.apellidos,clientejuridico.nombreEmpresa) NombreCliente,\r\n" + 
 					"concat_ws(\"\",dni,clientejuridico.RUC) dniRuc,nombreTipoCliente,direccion,tipoproducto.nombreTipoProducto,producto.nombre,unidades,\r\n" + 
 					"tipocomprobante.nombreTipoComprobante,importe from Venta \r\n" + 
 					"inner join cliente\r\n" + 

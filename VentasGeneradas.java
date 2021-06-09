@@ -106,7 +106,10 @@ public class VentasGeneradas extends JPanel {
 		};
 		
 		table.setDefaultRenderer(Object.class, new FormatoTabla());
-		table.setBackground(new Color(60,60,60));
+		table.setSelectionBackground(Color.LIGHT_GRAY);
+		table.setOpaque(false);
+		table.setBackground(new Color(0,0,0,0));
+		//table.setBackground(new Color(60,60,60));
 		table.setForeground(Color.WHITE);
 		table.getTableHeader().setBackground(new Color(255,99,71));
 		table.getTableHeader().setPreferredSize(new Dimension(0,35));

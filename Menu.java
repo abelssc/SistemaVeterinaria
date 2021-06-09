@@ -131,7 +131,7 @@ public class Menu extends JPanel {
 	
 	
 	public void crearMenuItems() {
-		int alturaItems=50;
+		int alturaItems=50;	
 		int anchoItems=menuItems.getWidth();
 		int contador=0;
 		
@@ -140,7 +140,6 @@ public class Menu extends JPanel {
 		ImageIcon iconoAlmacen= new ImageIcon(getClass().getResource("/imagenes/almacen.png"));
 		almacen.setIcon(new ImageIcon(iconoAlmacen.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 		almacen.setHorizontalAlignment(SwingConstants.LEADING);
-		
 		
 		compras=new JLabel("   Compras");
 		compras.setName("compras");
@@ -182,6 +181,7 @@ public class Menu extends JPanel {
 			e.addMouseListener(mouselistener);
 			contador++;
 		}
+		almacen.setBackground(Color.LIGHT_GRAY);
 		salir.setBounds(0,600,anchoItems,alturaItems);
 		
 	}

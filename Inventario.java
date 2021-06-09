@@ -49,7 +49,7 @@ public class Inventario extends JPanel {
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		//scrollPane.getViewport().setBorder(null);
+		scrollPane.getViewport().setBorder(null);
 		add(scrollPane);
 		
 		JPanel panel_imagen = new JPanel();
@@ -123,7 +123,9 @@ public class Inventario extends JPanel {
 		table.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 35));
 		table.getTableHeader().setFont(new Font("JetBrainsMono Nerd Font Mono", Font.PLAIN, 14));
 		table.getTableHeader().setBackground(new Color(255,99,71));
-		table.setBackground(new Color(60,60,60));
+		
+		table.setOpaque(false);//-------------------------------------------------------------edit PONER OPAQUE FALSE Y LUEGO PINTAR , ESTO ARREGLA EL BUG DE SOBREPINTADO
+		table.setBackground(new Color(0,true));
 		
 		table.setForeground(Color.WHITE);
 		scrollPane.setViewportView(table);
